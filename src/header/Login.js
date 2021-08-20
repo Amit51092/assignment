@@ -1,6 +1,7 @@
 import React, { useState } from "react";
 import { Link } from "react-router-dom";
 import { useHistory } from "react-router";
+import { toast } from 'react-toastify';
 function Login() {
   const [state, setState] = useState({
     email: "",
@@ -12,7 +13,7 @@ function Login() {
    let users = JSON.parse(localStorage.getItem("values"))
     users.map(el =>{
         if (el.email === state.email && el.password === state.password){
-          
+            toast("Logged in Successfully");
             localStorage.setItem("currentMyUser", JSON.stringify(el));
             history.push("/user")
              }

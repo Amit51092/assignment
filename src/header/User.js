@@ -1,5 +1,6 @@
 import React from 'react'
 import { useHistory } from 'react-router'
+import { toast } from 'react-toastify';
 function User() {
     var currentUser = localStorage.getItem("currentMyUser")
    
@@ -10,13 +11,17 @@ function User() {
     return 
   }
 function removeItem(elm){
-  const newData =[];
+  var newData =[];
   users.forEach(element => {
-    if(elm.email !==element.email){
+    console.log(element)
+    if(elm.email !== element.email){
      newData.push(element)
     }
  });
+ console.log(newData)
+
    localStorage.setItem("values",JSON.stringify(newData))
+   toast("Deleted Successfully");
      history.push("/user")
 }
 

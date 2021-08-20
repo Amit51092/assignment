@@ -1,7 +1,8 @@
 import React, { useState, useEffect } from "react";
+import { useHistory } from "react-router";
 
 import Validation from "./Validation";
-
+import { toast } from 'react-toastify';
 function Registration() {
   const LOCAL_STORAGE_KEY = "values";
 
@@ -15,6 +16,7 @@ function Registration() {
     password: "",
     id: 1,
   });
+  const history = useHistory();
 
   const RegistrationHandler = (e) => {
     e.preventDefault(e);
@@ -24,8 +26,9 @@ function Registration() {
       JSON.parse(localStorage.getItem("values")).length + 1;
     state["id"] = idVal;
     setValues([...values, state]);
-   
-    window.location.href = window.location.origin + "/Home";
+    toast("Registered Successfully")
+    // history.push("/login")
+    window.location.href = window.location.origin + "/login";
   };
 
   useEffect(() => {

@@ -7,10 +7,12 @@ import Registration from "./Registration";
 import User from "./User";
 import update from "../update";
 import { useHistory } from "react-router";
+import { toast } from 'react-toastify';
 function NavLink() {
   const history = useHistory();
   function logOut() {
     localStorage.removeItem("currentMyUser");
+    toast("Logut Successfully");
     history.push("/login");
   }
   const currentUser = JSON.parse(localStorage.getItem("currentMyUser"));

@@ -1,6 +1,7 @@
 import React, { useState } from "react";
 import { useLocation } from "react-router-dom";
 import { useHistory } from "react-router";
+import { toast } from 'react-toastify';
 function User() {
   const location = useLocation();
   const history = useHistory();
@@ -28,7 +29,8 @@ function User() {
       }
     });
     localStorage.setItem("values", JSON.stringify(newData));
-    history.push("/users");
+    toast("updated Successfully");
+    history.push("/user");
   }
 
   return (
