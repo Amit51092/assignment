@@ -1,45 +1,81 @@
 import React from "react";
-import { Link } from "react-router-dom";
-import { Route, Switch } from "react-router-dom";
+import { Route, Switch, Link, Redirect } from "react-router-dom";
 import Home from "./Home";
 import About from "./About";
 import Login from "./Login";
 import Registration from "./Registration";
 import User from "./User";
-
+import update from "../update";
+import { useHistory } from "react-router";
 function NavLink() {
-  // var User = localStorage.getItem("currentUser")
+  const history = useHistory();
+  function logOut() {
+    localStorage.removeItem("currentMyUser");
+    history.push("/login");
+  }
+  const currentUser = JSON.parse(localStorage.getItem("currentMyUser"));
+  
   return (
     <div className="Navbar">
       <div text="center">
         <ul className="nav">
           <li className="nav-item">
-            <Link to="/Home" className="nav-link active">
+            <Link to="/home" className="nav-link active">
               Home
             </Link>
           </li>
           <li className="nav-item">
-            <Link to="/About" className="nav-link">
+            <Link to="/about" className="nav-link">
               About
             </Link>
           </li>
+          { currentUser ===null ? (
           <li className="nav-item">
-            <Link to="/Login" className="nav-link ">
+            <Link to="/login" className="nav-link ">
               Login
             </Link>
-          </li>
+          </li> ) : ("")}
+          { currentUser === null ? (
           <li className="nav-item">
-            <Link to="/Registration" className="nav-link">
+            <Link to="/registration" className="nav-link">
               Registration
             </Link>
-          </li>
+          </li> ) : ("")}
+          {currentUser !== null ? (
+            <li className="nav-item">
+              <Link to="/user" className="nav-link">
+                users
+              </Link>
+            </li>
+          ) : (
+            " "
+          )} 
+          {currentUser !==null ? (
+          <button type="button" class="btn btn-link margin70" onClick={()=>history.push("/update",
+          {currentObject:currentUser})}>{currentUser.fullName}</button>):""}
+           {currentUser !==null ? (
+           <button
+              type="button"
+              class="btn btn-secondary "
+              onClick={() => logOut()}
+            >
+              Log out
+            </button>
+           ):"" }
+          
+         
         </ul>
+
         <Switch>
-          <Route path="/Home" component={Home} />
-          <Route path="/About" component={About} />
-          <Route path="/Login" component={Login} />
-          <Route path="/Registration" component={Registration} />
-          <Route path="/User" component={User} />
+          <Route exact path="/">
+            <Redirect to="/home" />
+          </Route>
+          <Route path="/home" component={Home} />
+          <Route path="/about" component={About} />
+          <Route path="/login" component={Login} />
+          <Route path="/registration" component={Registration} />
+          <Route path="/user" component={User} />
+          <Route path="/update" component={update} />
         </Switch>
       </div>
     </div>

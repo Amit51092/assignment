@@ -24,7 +24,7 @@ function Registration() {
       JSON.parse(localStorage.getItem("values")).length + 1;
     state["id"] = idVal;
     setValues([...values, state]);
-
+   
     window.location.href = window.location.origin + "/Home";
   };
 
@@ -36,6 +36,8 @@ function Registration() {
   useEffect(() => {
     localStorage.setItem(LOCAL_STORAGE_KEY, JSON.stringify(values));
   }, [values]);
+  
+  
 
   return (
     <div>
@@ -44,7 +46,7 @@ function Registration() {
       <form onSubmit={RegistrationHandler}>
         <div class="form-group row">
           <label for="fullName" class="col-sm-4 col-form-label">
-            full name
+            Full Name
           </label>
           <div class="col-sm-4">
             <input
@@ -57,7 +59,7 @@ function Registration() {
                 setState({ ...state, fullName: ev.target.value })
               }
             />
-            {errors.Email && <p className="errors">{errors.Email}</p>}
+            {errors.fullName && <p className="errors">{errors.fullName}</p>}
           </div>
         </div>
         <br />
@@ -66,13 +68,14 @@ function Registration() {
             Email
           </label>
           <div class="col-sm-4">
-            <input
+            <input 
               type="Email"
               className="form-control"
               placeholder="Email"
               name="email"
               value={state.Email}
               onChange={(ev) => setState({ ...state, email: ev.target.value })}
+              
             />
             {errors.Email && <p className="errors">{errors.Email}</p>}
           </div>
@@ -135,7 +138,9 @@ function Registration() {
             <br />
             {errors.CreatePassword && (
               <p className="errors">{errors.CreatePassword}</p>
+            
             )}
+            
           </div>
         </div>
         <button type="submit" className="btn btn-primary">

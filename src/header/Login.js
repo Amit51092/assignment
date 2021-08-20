@@ -1,33 +1,33 @@
 import React, { useState } from "react";
 import { Link } from "react-router-dom";
+import { useHistory } from "react-router";
 function Login() {
   const [state, setState] = useState({
     email: "",
     password: "",
   });
+  const history=useHistory();
   function loginHandle(e) {
     e.preventDefault(e);
-    console.log(state)
-    let users = JSON.parse(localStorage.getItem("values"))
-    
+   let users = JSON.parse(localStorage.getItem("values"))
     users.map(el =>{
         if (el.email === state.email && el.password === state.password){
           
-            localStorage.setItem("currentMyUser", el.id);
-            window.location.href = window.location.origin + "/User"
-        }
+            localStorage.setItem("currentMyUser", JSON.stringify(el));
+            history.push("/user")
+             }
         else{
           console.log("Email or password mismatch")
         }
         return null;
   })
 }
- 
-  return (
+ return (
     <div>
+  
       <h2> User Sign in</h2> <br />
       <form onSubmit={loginHandle}>
-        <br />
+      <br />
         <span>UserEmail or password</span>
         <br />
         <br />
@@ -35,28 +35,26 @@ function Login() {
           type="text"
           placeholder="Email"
           onChange={(ev) => setState({ ...state, email: ev.target.value })}
-        />
+         />
         <br />
         <br />
-
         <input
           type="password"
           placeholder="Enter User Password"
           onChange={(ev) => setState({ ...state, password: ev.target.value })}
-        />
+           />
         <br />
         <br />
-
-        <button type="submit" className="btn btn-success">
+       <button type="submit" className="btn btn-success">
           Sign in
         </button>
         <br />
-        <br />
+         <br />
         <Link to="/Registration" className="link-secondary">
           Create New Account
         </Link>
-      </form>
-    </div>
+       </form>
+     </div>
   );
 }
 export default Login;
